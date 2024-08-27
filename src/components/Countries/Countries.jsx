@@ -7,21 +7,30 @@ const Countries = () => {
   const [reload, setReload] = useState(false);
   const [freeBtn, setFreeBtn] = useState(false);
   const [notFreeBtn, setNotFreeBtn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://restcountries.com/v3.1/all')
-      .then((res) => res.json())
-      .then((data) => setCountries(data));
+    try {
+      fetch('https://restcountries.com/v3.1/all')
+        .then((res) => res.json())
+        .then((data) => setCountries(data))
+        .then(setLoading(false));
+    } catch (e) {
+      setCountries([]);
+      console.log(e);
+    }
   }, [reload]);
 
   const handleFree = () => {
-    setNotFreeBtn(!notFreeBtn);
-    const filteredCountry = countries.filter((c) => c.independent);
+    setFreeBtn(!notFreeBtn);
+    const copyC = [...countries];
+    const filteredCountry = copyC.filter((c) => c.independent);
     setCountries(() => filteredCountry);
   };
   const handleNotFree = () => {
     setNotFreeBtn(!freeBtn);
-    const filteredCountry = countries.filter((c) => !c.independent);
+    const copyC = [...countries];
+    const filteredCountry = copyC.filter((c) => !c.independent);
     setCountries(() => filteredCountry);
   };
 
@@ -50,8 +59,12 @@ const Countries = () => {
       <button className="btn btn-primary text-3xl ml-3" onClick={handleReload}>
         Reload
       </button>
+      <span
+        className={`m-16 ${
+          loading ? 'block' : 'hidden'
+        }  loading loading-bars loading-lg`}
+      ></span>
       <div className="flex flex-wrap">
-        <button></button>
         {countries.map((c) => (
           // <h1
           //   className="block text-bold text-4xl text-orange-400 m-4 font-extrabold"
