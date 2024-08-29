@@ -1,12 +1,12 @@
 import './App.css';
-import Card from './components/Card/Card';
+import BoxGrid from './components/BoxGrid/BoxGrid';
 
 function App() {
   return (
-    <>
+    <div className='flex items-center justify-center h-screen'>
       {/* <Countries /> */}
-      <Card />
-    </>
+      <BoxGrid />
+    </div>
   );
 }
 
