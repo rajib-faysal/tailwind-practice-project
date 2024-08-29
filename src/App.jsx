@@ -1,10 +1,11 @@
 import './App.css';
-import Countries from './components/Countries/Countries';
+import Card from './components/Card/Card';
 
 function App() {
   return (
     <>
       {/* <Countries /> */}
+      <Card />
     </>
   );
 }
